@@ -1,4 +1,5 @@
 import streamlit as st
+st.set_page_config(layout="wide")
 import boto3
 from langchain_community.document_loaders import AmazonTextractPDFLoader
 from langchain_core.output_parsers import StrOutputParser
@@ -10,8 +11,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Streamlit configuration
-st.title("Engineering Drawing Analysis")
-st.write("Enter the S3 path to an engineering drawing PDF document for data extraction and analysis.")
+st.title("Architectural Blueprints Analysis")
+st.write("Enter the S3 path to an Architectural Blueprints PDF document for data extraction and analysis.")
 
 # AWS Configuration
 retry_config = Config(
@@ -49,13 +50,13 @@ def load_data(s3_path):
 def get_llm_response(model, data, output_parser):
     prompt = PromptTemplate(
         template="""
-            You are an AI assistant specializing in extracting structured data from complex engineering drawing. Your task is to analyze the provided TEXT data, 
-            which contains text, tables, and forms extracted from a engineering drawings PDF document. It is CRITICAL that you extract information from it, like what are the blueprints about, distances, areas, locations, and any possible information.
+            You are an AI assistant specializing in extracting structured data from complex Architectural Blueprints. Your task is to analyze the provided TEXT data, 
+            which contains text, tables, and forms extracted from a Architectural Blueprintss PDF document. It is CRITICAL that you extract information from it, like what are the blueprints about, distances, areas, locations, and any possible information.
             IMPORTANT INSTRUCTIONS:
             1. Analyze EVERY SINGLE ELEMENT of the provided data: all text, every cell in every table, and all form fields.
             2. If the table is detected return it in proper tabular format.
             3. Process ALL pages and ALL data in the document.           
-            Here is the TEXT data extracted from the engineering drawing pdf:
+            Here is the TEXT data extracted from the Architectural Blueprints pdf:
             {data}""",
         input_variables=["data"]
     )
